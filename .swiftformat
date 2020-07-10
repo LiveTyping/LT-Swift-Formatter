@@ -1,0 +1,8 @@
+# file options
+--exclude Pods, R.generated.swift
+
+# format options
+--nospaceoperators "..."
+
+# rules
+--rules blankLinesAroundMark, consecutiveSpaces, consecutiveBlankLines, duplicateImports, hoistPatternLet, isEmpty, linebreakAtEndOfFile, redundantBreak, redundantExtensionACL, redundantFileprivate, redundantGet, redundantLet, redundantNilInit, redundantObjc, redundantParens, redundantRawValues, redundantSelf, redundantVoidReturnType, duplicateImports, sortedImports, spaceAroundBrackets, spaceAroundOperators, spaceInsideBraces, spaceAroundParens, spaceInsideBrackets, spaceInsideGenerics, spaceInsideParens, todos, trailingClosures, trailingSpace, typeSugar, elseOnSameLine, insertBlankLinesAtScope, addBlanklineBeforeSuper
