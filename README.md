@@ -1,4 +1,4 @@
-LT-Swift-Formatter
+# LT-Swift-Formatter
 
 ### Как использовать данный форматтер:
 1. Закинуть файл конфигурации (*.swiftformat*) в корень проекта .
