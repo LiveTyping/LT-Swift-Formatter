@@ -795,7 +795,9 @@ public struct _FormatRules {
 
                     let startOfScopeLine = formatter.originalLine(at: startOfScopeIndex)
                     let funcLine = formatter.originalLine(at: startOfScopeIndex)
-                    if startOfScopeLine == funcLine { return }
+
+                    if (startOfScopeLine == funcLine && wrongToken == .keyword("func")) ||
+                        (formatter.startOfLine(at: wrongIndex) != wrongIndex && wrongToken == .keyword("protocol")) { return }
                 }
 
                 formatter.insertLinebreak(at: startOfScopeIndex + 1)
@@ -818,7 +820,9 @@ public struct _FormatRules {
                     $0 == .keyword("func") || $0 == .keyword("protocol") }),
                     let wrongIndex = formatter.index(of: token, before: startOfScopeIndex) {
                     let funcLine = formatter.originalLine(at: wrongIndex)
-                    if startOfScopeLine == funcLine { return }
+
+                    if (startOfScopeLine == funcLine && wrongToken == .keyword("func")) ||
+                        (formatter.startOfLine(at: wrongIndex) != wrongIndex && wrongToken == .keyword("protocol")) { return }
                 }
 
                 guard startOfScopeLine == keywordLine else { return }
@@ -850,6 +854,8 @@ public struct _FormatRules {
                 else { return }
 
             let endOfLine = formatter.endOfLine(at: i)
+            guard formatter.token(at: endOfLine)?.unescaped() == ")" else { return }
+
             guard !(formatter.token(at: endOfLine + 1)?.isLinebreak ?? true) && !(formatter.token(at: endOfLine + 2)?.isEndOfScope ?? true) else { return }
             formatter.insertLinebreak(at: endOfLine)
         }

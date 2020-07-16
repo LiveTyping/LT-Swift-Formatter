@@ -235,10 +235,61 @@ class BlanklineInScopeTests: XCTestCase {
         XCTAssertEqual(output, formattedInput)
     }
 
+    func testBlanklinesInsideProtocolExtension() {
+        let input = """
+        protocol IsPresenter {
+            associatedtype Input
+            associatedtype Output
+
+            func bindInput(_ input: Input)
+            func configureOutput(_ input: Input) -> Output
+
+            func buildOutput(with input: Input) -> Output
+        }
+
+        extension IsPresenter {
+            func buildOutput(with input: Input) -> Output {
+                bindInput(input)
+
+                let output = configureOutput(input)
+                return output
+            }
+        }
+        """
+
+        let output = """
+        protocol IsPresenter {
+            associatedtype Input
+            associatedtype Output
+
+            func bindInput(_ input: Input)
+            func configureOutput(_ input: Input) -> Output
+
+            func buildOutput(with input: Input) -> Output
+        }
+
+        extension IsPresenter {
+
+            func buildOutput(with input: Input) -> Output {
+                bindInput(input)
+
+                let output = configureOutput(input)
+                return output
+            }
+
+        }
+        """
+
+        let formattedInput = (try? format(input, rules: [FormatRules.insertBlankLinesAtScope])) ?? ""
+        XCTAssertEqual(output, formattedInput)
+    }
+
     func testBlanklineAfterCallSuper() {
         let input = """
         override func foo() {
             super.foo()
+
+            bar()
         }
         """
 
@@ -246,6 +297,7 @@ class BlanklineInScopeTests: XCTestCase {
         override func foo() {
             super.foo()
 
+            bar()
         }
         """
 
@@ -284,6 +336,27 @@ class BlanklineInScopeTests: XCTestCase {
         override func foo() {
             _view = a
             super.foo()
+        }
+        """
+
+        let formattedInput = (try? format(input, rules: [FormatRules.addBlanklineBeforeSuper])) ?? ""
+        XCTAssertEqual(output, formattedInput)
+    }
+
+    func testBlanklineAfterCallSuper_multipleLineNoFormatting() {
+        let input = """
+        init() {
+            _view = a
+            super.init(a: 0,
+                       b: 0)
+        }
+        """
+
+        let output = """
+        init() {
+            _view = a
+            super.init(a: 0,
+                       b: 0)
         }
         """
 

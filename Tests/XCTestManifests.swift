@@ -86,6 +86,7 @@ extension BlanklineInScopeTests {
     static let __allTests__BlanklineInScopeTests = [
         ("testBlanklineAfterCallSuper", testBlanklineAfterCallSuper),
         ("testBlanklineAfterCallSuper_expectNoFormatting", testBlanklineAfterCallSuper_expectNoFormatting),
+        ("testBlanklineAfterCallSuper_multipleLineNoFormatting", testBlanklineAfterCallSuper_multipleLineNoFormatting),
         ("testBlanklineAfterCallSuper_superAtBottom_expectNoFormatting", testBlanklineAfterCallSuper_superAtBottom_expectNoFormatting),
         ("testBlankLineAtStartOfScope", testBlankLineAtStartOfScope),
         ("testBlankLineAtStartOfScope_expectFormatAtEnd", testBlankLineAtStartOfScope_expectFormatAtEnd),
@@ -96,6 +97,7 @@ extension BlanklineInScopeTests {
         ("testBlankLineAtStartOfScope_NoFormatClassFunc", testBlankLineAtStartOfScope_NoFormatClassFunc),
         ("testBlankLineAtStartOfScope_NoFormatProtocolClass", testBlankLineAtStartOfScope_NoFormatProtocolClass),
         ("testBlankLineAtStartOfScope_NoFormatProtocolWithGetter", testBlankLineAtStartOfScope_NoFormatProtocolWithGetter),
+        ("testBlanklinesInsideProtocolExtension", testBlanklinesInsideProtocolExtension),
     ]
 }
 
