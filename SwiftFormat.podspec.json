@@ -9,8 +9,8 @@
   "homepage": "https://github.com/nicklockwood/SwiftFormat",
   "authors": "Nick Lockwood",
   "source": {
-    "git": "https://github.com/nicklockwood/SwiftFormat.git",
-    "tag": "0.44.16"
+    "git": "http://git.ltst.su/ios/LT-Swift-Formatter.git",
+    "tag": "0.44.17"
   },
   "default_subspecs": "Core",
   "subspecs": [
