@@ -826,15 +826,12 @@ public struct _FormatRules {
                 }
 
                 guard startOfScopeLine == keywordLine else { return }
-                guard !(formatter.token(at: i)?.isLinebreak ?? true) else { return }
-                guard let prevEndScopeIndex = formatter.index(of: .endOfScope, before: i) else { return }
+                
+                let isCorrectEndOfScope = !(formatter.token(at: i - 2)?.isLinebreak ?? true)
 
-                let isCloseBrace = formatter.token(at: prevEndScopeIndex) == .endOfScope("}")
-                let isCorrectEndOfScope = isCloseBrace || !(formatter.token(at: i - 3)?.isLinebreak ?? true)
+                guard isCorrectEndOfScope else { return }
 
-                guard isCorrectEndOfScope, prevEndScopeIndex == i - 2 else { return }
-
-                formatter.insertLinebreak(at: prevEndScopeIndex + 1)
+                formatter.insertLinebreak(at: i - 1)
 
             default:
                 break
@@ -842,20 +839,17 @@ public struct _FormatRules {
         }
     }
 
-    public let addBlanklineBeforeSuper = FormatRule(
-        help: "Insert blank line before super call",
+    public let addBlanklineAfterSuper = FormatRule(
+        help: "Insert blank line after super call",
         sharedOptions: ["linebreaks"]
     ) { formatter in
         formatter.forEachToken { i, token in
             guard token.isIdentifier, token.unescaped() == "super" else { return }
-            guard let dotIndex = formatter.index(of: .nonSpaceOrLinebreak, after: i, if: {
-                $0 == .operator(".", .infix) }),
-                dotIndex == i + 1
-                else { return }
-
+            
             let endOfLine = formatter.endOfLine(at: i)
-            guard formatter.token(at: endOfLine)?.unescaped() == ")" else { return }
-
+            guard formatter.token(at: endOfLine) == .endOfScope(")")
+            else { return }
+            
             guard !(formatter.token(at: endOfLine + 1)?.isLinebreak ?? true) && !(formatter.token(at: endOfLine + 2)?.isEndOfScope ?? true) else { return }
             formatter.insertLinebreak(at: endOfLine)
         }

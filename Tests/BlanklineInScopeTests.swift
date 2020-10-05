@@ -283,6 +283,45 @@ class BlanklineInScopeTests: XCTestCase {
         let formattedInput = (try? format(input, rules: [FormatRules.insertBlankLinesAtScope])) ?? ""
         XCTAssertEqual(output, formattedInput)
     }
+    
+    func testBlankLinesInStruct_noSpacing() {
+        let input = """
+        struct Input {
+            var startDetect: Observable<Void>
+        }
+        """
+
+        let output = """
+        struct Input {
+
+            var startDetect: Observable<Void>
+
+        }
+        """
+
+        let formattedInput = (try? format(input, rules: [FormatRules.insertBlankLinesAtScope])) ?? ""
+        XCTAssertEqual(output, formattedInput)
+    }
+    
+    func testBlankLinesInStruct() {
+        let input = """
+        struct Input {
+
+            var startDetect: Observable<Void>
+        }
+        """
+
+        let output = """
+        struct Input {
+
+            var startDetect: Observable<Void>
+
+        }
+        """
+
+        let formattedInput = (try? format(input, rules: [FormatRules.addBlanklineAfterSuper])) ?? ""
+        XCTAssertEqual(output, formattedInput)
+    }
 
     func testBlanklineAfterCallSuper() {
         let input = """
@@ -301,7 +340,7 @@ class BlanklineInScopeTests: XCTestCase {
         }
         """
 
-        let formattedInput = (try? format(input, rules: [FormatRules.addBlanklineBeforeSuper])) ?? ""
+        let formattedInput = (try? format(input, rules: [FormatRules.addBlanklineAfterSuper])) ?? ""
         XCTAssertEqual(output, formattedInput)
     }
 
@@ -320,7 +359,7 @@ class BlanklineInScopeTests: XCTestCase {
         }
         """
 
-        let formattedInput = (try? format(input, rules: [FormatRules.addBlanklineBeforeSuper])) ?? ""
+        let formattedInput = (try? format(input, rules: [FormatRules.addBlanklineAfterSuper])) ?? ""
         XCTAssertEqual(output, formattedInput)
     }
 
@@ -339,7 +378,7 @@ class BlanklineInScopeTests: XCTestCase {
         }
         """
 
-        let formattedInput = (try? format(input, rules: [FormatRules.addBlanklineBeforeSuper])) ?? ""
+        let formattedInput = (try? format(input, rules: [FormatRules.addBlanklineAfterSuper])) ?? ""
         XCTAssertEqual(output, formattedInput)
     }
 
@@ -360,7 +399,30 @@ class BlanklineInScopeTests: XCTestCase {
         }
         """
 
-        let formattedInput = (try? format(input, rules: [FormatRules.addBlanklineBeforeSuper])) ?? ""
+        let formattedInput = (try? format(input, rules: [FormatRules.addBlanklineAfterSuper])) ?? ""
+        XCTAssertEqual(output, formattedInput)
+    }
+    
+    func testBlanklineAfterCallSuper_parameterWithNewLine() {
+        let input = """
+        init() {
+            _view = a
+            super.init(animated: animated)
+
+            f()
+        }
+        """
+
+        let output = """
+        init() {
+            _view = a
+            super.init(animated: animated)
+
+            f()
+        }
+        """
+
+        let formattedInput = (try? format(input, rules: [FormatRules.addBlanklineAfterSuper])) ?? ""
         XCTAssertEqual(output, formattedInput)
     }
 
