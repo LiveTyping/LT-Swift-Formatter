@@ -319,7 +319,7 @@ class BlanklineInScopeTests: XCTestCase {
         }
         """
 
-        let formattedInput = (try? format(input, rules: [FormatRules.addBlanklineAfterSuper])) ?? ""
+        let formattedInput = (try? format(input, rules: [FormatRules.insertBlankLinesAtScope])) ?? ""
         XCTAssertEqual(output, formattedInput)
     }
 
