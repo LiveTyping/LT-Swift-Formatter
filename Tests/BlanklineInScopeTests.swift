@@ -303,6 +303,19 @@ class BlanklineInScopeTests: XCTestCase {
         XCTAssertEqual(output, formattedInput)
     }
     
+    func testBlankLines_emptyExtension() {
+        let input = """
+        extension DeviceInfoCollection: RegistrationModel {}
+        """
+
+        let output = """
+        extension DeviceInfoCollection: RegistrationModel {}
+        """
+
+        let formattedInput = (try? format(input, rules: [FormatRules.insertBlankLinesAtScope])) ?? ""
+        XCTAssertEqual(output, formattedInput)
+    }
+    
     func testBlankLinesInStruct() {
         let input = """
         struct Input {

@@ -786,6 +786,7 @@ public struct _FormatRules {
                  .keyword("struct"),
                  .keyword("extension"):
                 guard let startOfScopeIndex = formatter.index(of: .startOfScope("{"), after: i),
+                      formatter.token(at: i + 1) != .endOfScope("{"),
                     !(formatter.token(at: startOfScopeIndex + 2)?.isLinebreak ?? true)
                 else { return }
 
@@ -815,6 +816,7 @@ public struct _FormatRules {
 
                 let startOfScopeLine = formatter.originalLine(at: startOfScopeIndex)
                 let keywordLine = formatter.originalLine(at: keywordIndex)
+                let endOfScopeLine = formatter.originalLine(at: i)
 
                 if let wrongToken = formatter.lastToken(before: startOfScopeIndex, where: {
                     $0 == .keyword("func") || $0 == .keyword("protocol") }),
@@ -825,7 +827,9 @@ public struct _FormatRules {
                         (formatter.startOfLine(at: wrongIndex) != wrongIndex && wrongToken == .keyword("protocol")) { return }
                 }
 
-                guard startOfScopeLine == keywordLine else { return }
+                guard startOfScopeLine == keywordLine,
+                      startOfScopeLine != endOfScopeLine
+                else { return }
                 
                 let isCorrectEndOfScope = !(formatter.token(at: i - 2)?.isLinebreak ?? true)
 
